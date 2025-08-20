@@ -34,10 +34,12 @@ export async function PUT(request, { params }) {
 }
 
 export async function GET(request, { params }) {
-    const { id } = params;
-
     await connectMongoDB();
-    const umkmInfo = await UmkmInfo.findOne({ _id: id });
+    const umkm = await UmkmInfo.findById(params.id);
 
-    return NextResponse.json({ umkmInfo }, { status: 200 });
+    if (!umkm) {
+        return NextResponse.json({ error: "UMKM tidak ditemukan" }, { status: 404 });
+    }
+
+    return NextResponse.json(umkm);
 }
