@@ -21,7 +21,7 @@ export default function Home() {
   });
   return (
     <div id='home'>
-      <Banner imageUrl='assets/image/tes.png' />
+      <Banner imageUrl='assets/image/Banner.png' />
       <VillageDescription />
       <VillageHistory />
       <VisionMissionSection />

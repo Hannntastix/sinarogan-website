@@ -194,7 +194,7 @@ export default function VillageEditDashboard({
     return (
         <div className="min-h-screen bg-gray-50 font-sans">
             {/* Header Utama */}
-            <header className="bg-white shadow-sm border-b sticky top-0 z-10">
+            <header className="bg-white shadow-sm py-3 md:py-0 sticky top-0 z-10">
                 <div className="max-w-7xl mx-auto px-6 py-5">
                     <div className="flex items-center justify-between">
                         <div>
@@ -204,13 +204,21 @@ export default function VillageEditDashboard({
                         <button
                             onClick={handleSave}
                             disabled={saving}
-                            className="flex items-center space-x-2 bg-green-500 cursor-pointer hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="md:flex hidden items-center space-x-2 bg-green-500 cursor-pointer hover:bg-green-700 text-white px-6 py-3 mb-5 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {saving ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-5 h-5" />}
                             <span>{saving ? 'Menyimpan...' : 'Simpan Perubahan'}</span>
                         </button>
                     </div>
                 </div>
+                <button
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="flex md:hidden items-center mx-auto space-x-2 bg-green-500 cursor-pointer hover:bg-green-700 text-white px-6 py-3 mb-5 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    {saving ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-5 h-5" />}
+                    <span>{saving ? 'Menyimpan...' : 'Simpan Perubahan'}</span>
+                </button>
             </header>
 
             {/* Notifikasi Pop-up */}

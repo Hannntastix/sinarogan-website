@@ -4,14 +4,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { buttonVariants } from "../../components/ui/button";
 
-export default function DashboardBtn(villageInfo) {
+export default function UmkmDashboardBtn(umkmInfo) {
     const [dashboards, setDashboards] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchDashboards = async () => {
             try {
-                const res = await fetch('/api/dashboard', {
+                const res = await fetch('/api/umkm', {
                     cache: 'no-store',
                 });
 
@@ -28,19 +28,18 @@ export default function DashboardBtn(villageInfo) {
                 setLoading(false);
             }
         };
-
         fetchDashboards();
     }, []);
 
 
-    console.log(villageInfo);
+    console.log(umkmInfo);
 
     return (
         <div>
-            {dashboards.map((villageInfo) => (
-                <div key={villageInfo._id}>
+            {dashboards.map((umkmInfo) => (
+                <div key={umkmInfo._id}>
                     <Link
-                        href={`/editDashboard/${villageInfo._id}`}
+                        href={`/editUmkm/${umkmInfo._id}`}
                         className="select-none bg-white hover:bg-orange-400 px-3 py-1 rounded-lg hover:text-white text-orange-400 cursor-pointer font-semibold transition">
                         Dashboard
                     </Link>

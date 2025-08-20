@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
-// Dynamically import the map component to avoid SSR issues
 const MyMap = dynamic(() => import('./MyMap'), {
     ssr: false,
     loading: () => (

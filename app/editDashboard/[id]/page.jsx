@@ -18,6 +18,7 @@ const getVillageInfoById = async (id) => {
 };
 
 export default async function EditDashboard({ params }) {
+
     const { id } = await params;
     console.log("id :", id);
     const { villageInfo } = await getVillageInfoById(id);

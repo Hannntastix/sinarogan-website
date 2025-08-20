@@ -12,6 +12,9 @@ import {
     Grid3X3,
     List
 } from 'lucide-react';
+import RemoveBtn from '../component/RemoveBtn';
+import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+import { useRouter } from 'next/navigation';
 
 export default function UMKMListPage() {
     const [dashboards, setDashboards] = useState([]);
@@ -20,6 +23,12 @@ export default function UMKMListPage() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+
+    const route = useRouter();
+
+    const { isAuthenticated, isLoading, user } = useKindeBrowserClient();
+
+    const isAdmin = user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
     useEffect(() => {
         const fetchDashboards = async () => {
@@ -139,6 +148,18 @@ export default function UMKMListPage() {
 
                         <div className="flex items-center space-x-3">
                             <div className="flex items-center bg-gray-100 rounded-lg p-1">
+                                {isAuthenticated ? (
+                                    <>
+                                        {isAdmin ? (
+                                            <button
+                                                onClick={() => route.push('/formUmkm')}
+                                                className={`p-2 cursor-pointer mx-4 hover:bg-green-700 rounded-md transition-colors bg-green-500 text-white`}
+                                            >
+                                                Tambah Umkm
+                                            </button>
+                                        ) : null}
+                                    </>
+                                ) : null}
                                 <button
                                     onClick={() => setViewMode('grid')}
                                     className={`p-2 cursor-pointer rounded-md transition-colors ${viewMode === 'grid' ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
@@ -224,13 +245,35 @@ export default function UMKMListPage() {
                                             )}
                                         </div>
 
-                                        <button
-                                            onClick={() => window.location.href = `/umkmDetail/${umkm._id}`}
-                                            className="w-full cursor-pointer bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium py-3 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 flex items-center justify-center space-x-2 group"
-                                        >
-                                            <span>Lihat Detail</span>
-                                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                        </button>
+                                        <div className='flex flex-row'>
+                                            <button
+                                                onClick={() => window.location.href = `/umkmDetail/${umkm._id}`}
+                                                className="w-full cursor-pointer bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium py-3 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 flex items-center justify-center space-x-2 group"
+                                            >
+                                                <span>Lihat Detail</span>
+                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                            </button>
+                                            {isAuthenticated ? (
+                                                <>
+                                                    {isAdmin ? (
+                                                        <RemoveBtn id={umkm._id} />
+                                                    ) : null}
+                                                </>
+                                            ) : null}
+                                        </div>
+                                        {isAuthenticated ? (
+                                            <>
+                                                {isAdmin ? (
+                                                    <button
+                                                        onClick={() => window.location.href = `/editUmkm/${umkm._id}`}
+                                                        className="w-full cursor-pointer mt-5 bg-white text-blue-500 border-2 border-blue-500 font-medium py-3 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 flex items-center justify-center space-x-2 group"
+                                                    >
+                                                        <span>Edit Data Umkm</span>
+                                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                    </button>
+                                                ) : null}
+                                            </>
+                                        ) : null}
                                     </div>
                                 </div>
                             ) : (
@@ -255,11 +298,20 @@ export default function UMKMListPage() {
                                                 </h3>
                                                 <button
                                                     onClick={() => window.location.href = `/umkmDetail/${umkm._id}`}
-                                                    className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2"
+                                                    className="bg-green-500 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2"
                                                 >
                                                     <span>Detail</span>
                                                     <ArrowRight className="w-4 h-4" />
                                                 </button>
+                                            </div>
+                                            <div className='flex items-end'>
+                                                {isAuthenticated ? (
+                                                    <>
+                                                        {isAdmin ? (
+                                                            <RemoveBtn id={umkm._id} />
+                                                        ) : null}
+                                                    </>
+                                                ) : null}
                                             </div>
 
                                             <p className="text-gray-600 mb-4 leading-relaxed">

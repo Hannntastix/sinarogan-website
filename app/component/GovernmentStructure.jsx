@@ -121,7 +121,7 @@ export default function VillageStructureSection() {
                     <div className={`absolute top-0 right-0 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1 rounded-bl-lg text-xs font-semibold ${isMain ? 'text-sm' : ''}`}>
                         {person.jabatan.split(' ').pop()}
                     </div>
-                    <div className={`mx-auto mb-4 relative ${isMain ? 'w-24 h-24' : 'w-20 h-20'}`}>
+                    {/* <div className={`mx-auto mb-4 relative ${isMain ? 'w-24 h-24' : 'w-20 h-20'}`}>
                         <img
                             src={person.photo || getPhotoUrl(index)}
                             alt={person.nama}
@@ -129,7 +129,7 @@ export default function VillageStructureSection() {
                         />
                         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-emerald-500/20 to-transparent"></div>
                         <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
-                    </div>
+                    </div> */}
                     <div className="text-center">
                         <h3 className={`font-bold text-slate-800 mb-1 group-hover:text-emerald-600 transition-colors ${isMain ? 'text-xl' : 'text-lg'}`}>
                             {person.nama}
@@ -310,11 +310,11 @@ export default function VillageStructureSection() {
                             </svg>
                         </button>
                         <div className="text-center">
-                            <img
+                            {/* <img
                                 src={selectedPerson.photo || getPhotoUrl(0)}
                                 alt={selectedPerson.nama}
                                 className="w-24 h-24 object-cover rounded-full border-4 border-emerald-500 mx-auto mb-4"
-                            />
+                            /> */}
                             <h3 className="text-xl font-bold text-slate-800 mb-2">{selectedPerson.nama}</h3>
                             <p className="text-emerald-600 font-semibold mb-4">{selectedPerson.jabatan}</p>
                             {selectedPerson.period && (
