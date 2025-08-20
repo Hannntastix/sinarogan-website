@@ -1,7 +1,6 @@
 // app/api/upload/route.js
-import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { put } from '@vercel/blob';
+import { NextResponse } from 'next/server';
 import connectMongoDB from '../../../lib/mongodb';
 import File from '@/models/file';
 
@@ -14,51 +13,31 @@ export async function POST(request) {
         const description = data.get('description') || '';
 
         if (!file) {
-            return NextResponse.json(
-                { message: 'No file uploaded' },
-                { status: 400 }
-            );
+            return NextResponse.json({ message: 'No file uploaded' }, { status: 400 });
         }
-
-        // Check if file is PDF
         if (file.type !== 'application/pdf') {
-            return NextResponse.json(
-                { message: 'Only PDF files are allowed' },
-                { status: 400 }
-            );
+            return NextResponse.json({ message: 'Only PDF files are allowed' }, { status: 400 });
         }
-
-        // Check file size (10MB limit)
         if (file.size > 10 * 1024 * 1024) {
-            return NextResponse.json(
-                { message: 'File size must be less than 10MB' },
-                { status: 400 }
-            );
+            return NextResponse.json({ message: 'File size must be less than 10MB' }, { status: 400 });
         }
 
-        // Create upload directory
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-        try {
-            await mkdir(uploadDir, { recursive: true });
-        } catch (error) {
-            // Directory might already exist
-        }
-
-        // Generate unique filename
+        // --- BAGIAN YANG DIUBAH ---
+        // 1. Buat nama file yang unik untuk disimpan di cloud
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const filename = uniqueSuffix + '.pdf';
-        const filepath = path.join(uploadDir, filename);
+        const filename = `${uniqueSuffix}-${file.name}`;
 
-        // Convert file to buffer and save
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-        await writeFile(filepath, buffer);
+        // 2. Unggah file ke Vercel Blob, bukan ke folder lokal
+        const blob = await put(filename, file, {
+            access: 'public',
+        });
+        // --------------------------
 
-        // Save file info to database
+        // 3. Simpan URL dari Vercel Blob ke database
         const fileData = new File({
             filename: filename,
             originalName: file.name,
-            path: `/uploads/${filename}`, // Save relative path for serving
+            path: blob.url, // <-- Simpan URL publik dari Vercel Blob
             size: file.size,
             description: description
         });
@@ -69,9 +48,8 @@ export async function POST(request) {
             message: 'File uploaded successfully',
             file: {
                 id: fileData._id,
+                url: fileData.path, // Kirim kembali URL-nya
                 originalName: fileData.originalName,
-                size: fileData.size,
-                uploadDate: fileData.uploadDate
             }
         }, { status: 200 });
 
