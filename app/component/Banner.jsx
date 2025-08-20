@@ -29,7 +29,7 @@ export default function Banner({ imageUrl }) {
     useEffect(() => {
         const fetchDashboards = async () => {
             try {
-                const res = await fetch('http://localhost:3000/api/dashboard', {
+                const res = await fetch('https://sinarogan-website.vercel.app/api/dashboard', {
                     cache: 'no-store',
                 });
 

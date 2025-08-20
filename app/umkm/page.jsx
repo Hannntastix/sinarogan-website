@@ -33,7 +33,7 @@ export default function UMKMListPage() {
     useEffect(() => {
         const fetchDashboards = async () => {
             try {
-                const res = await fetch('http://localhost:3000/api/umkm', {
+                const res = await fetch('https://sinarogan-website.vercel.app/api/umkm', {
                     cache: 'no-store',
                 });
 

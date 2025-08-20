@@ -23,7 +23,7 @@ export default function RemoveBtn({ id }) {
     }, [isModalOpen]);
 
     const handleDeleteQuiz = async () => {
-        const res = await fetch(`http://localhost:3000/api/umkm?id=${id}`, {
+        const res = await fetch(`https://sinarogan-website.vercel.app/api/umkm?id=${id}`, {
             method: "DELETE",
         });
 

@@ -3,7 +3,7 @@ import UmkmEditDashboard from "@/app/umkmEditPage/page";
 
 const getUmkmInfoById = async (id) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/umkm/${id}`, {
+        const res = await fetch(`https://sinarogan-website.vercel.app/api/umkm/${id}`, {
             cache: "no-store",
         });
 

@@ -18,7 +18,7 @@ export default function UMKMIntroduction() {
     useEffect(() => {
         const fetchDashboards = async () => {
             try {
-                const res = await fetch('http://localhost:3000/api/umkm', {
+                const res = await fetch('https://sinarogan-website.vercel.app/api/umkm', {
                     cache: 'no-store',
                 });
 
@@ -171,7 +171,7 @@ export default function UMKMIntroduction() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>

@@ -47,7 +47,7 @@ export default function UmkmEditDashboard({
             }
 
             try {
-                const res = await fetch(`http://localhost:3000/api/umkm/${id}`, {
+                const res = await fetch(`https://sinarogan-website.vercel.app/api/umkm/${id}`, {
                     cache: 'no-store',
                 });
 

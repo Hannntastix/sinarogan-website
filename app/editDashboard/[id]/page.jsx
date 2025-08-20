@@ -3,7 +3,7 @@ import VillageEditDashboard from "@/app/dashboardPage/page";
 
 const getVillageInfoById = async (id) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/dashboard/${id}`, {
+        const res = await fetch(`https://sinarogan-website.vercel.app/api/dashboard/${id}`, {
             cache: "no-store",
         });
 
